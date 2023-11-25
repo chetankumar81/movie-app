@@ -6,6 +6,8 @@ import MovieDetail from "./MovieDetail";
 import Favorites from "./Favorites";
 import MovieList from "./MovieList";
 
+import styles from "./App.module.css";
+
 const API_ENDPOINT = "http://www.omdbapi.com/?apikey=37891927&s=";
 const MOVIE_FETCH_INIT = "MOVIE_FETCH_INIT";
 const MOVIE_FETCH_SUCCESS = "MOVIE_FETCH_SUCCESS";
@@ -102,28 +104,38 @@ function App() {
   }, [debouncedFetchMovies]);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/movie/:id" element={<MovieDetail />} />
-        <Route
-          path="/favorites"
-          element={<Favorites favorites={state.favorites} />}
-        />
-        <Route
-          path="/movies"
-          element={
-            <MovieList
-              state={state}
-              searchTerm={searchTerm}
-              handleSearchChange={handleSearchChange}
-              addToFavorites={addToFavorites}
-            />
-          }
-        />
-        <Route path="/" element={<Link to="/movies">Movie List</Link>} />
-      </Routes>
-    </Router>
+    <div className={styles.container}>
+      <Router>
+        <Routes>
+          <Route path="/movie/:id" element={<MovieDetail />} />
+          <Route
+            path="/favorites"
+            element={<Favorites favorites={state.favorites} />}
+          />
+          <Route
+            path="/movies"
+            element={
+              <MovieList
+                state={state}
+                searchTerm={searchTerm}
+                handleSearchChange={handleSearchChange}
+                addToFavorites={addToFavorites}
+              />
+            }
+          />
+          <Route path="/" element={Main()} />
+        </Routes>
+      </Router>
+    </div>
   );
+
+  function Main() {
+    return (
+      <div className={styles.App}>
+        <Link to="/movies">Click To View Movie List</Link>
+      </div>
+    );
+  }
 }
 
 export default App;
